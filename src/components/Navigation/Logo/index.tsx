@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button } from '@mui/material';
 import logoSvg from '@src/assets/logo.svg';
 
 const Root = styled.div`
@@ -7,24 +8,24 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const LogoImg = styled.img`
-  width: 82px;
-  height: 30px;
-`;
-
-const Text = styled.div`
+const LogoButton = styled(Button)`
   font-family: NotoSansKR;
   font-size: 16px;
   font-weight: bold;
   margin-left: 8px;
   color: white;
+  text-transform: none;
+`;
+
+const LogoImg = styled.img`
+  width: 82px;
+  height: 30px;
 `;
 
 export default function Logo () {
   return (
     <Root>
-      <LogoImg src={logoSvg} />
-      <Text>Time Traveler</Text>
+      <LogoButton startIcon={<LogoImg alt="logo" src={logoSvg} />}>Time Traveler</LogoButton>
     </Root>
   )
 }
