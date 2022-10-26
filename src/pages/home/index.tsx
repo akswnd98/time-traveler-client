@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BestSection from './BestSection';
 import changeCircleSvg from '@assets/change-circle.svg';
 import { Button } from '@mui/material';
 import LatestSection from './LatestSection';
+import theme from '@src/theme';
+import { useNavigate } from 'react-router-dom';
 
 const Root = styled.div`
   width: calc(100% / 6 * 4);
@@ -36,8 +38,26 @@ const ChangeCircle = styled.img`
   margin-left: 8px;
 `;
 
+const WriteButtonWrapper = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 8px;
+`;
+const WriteButton = styled(Button)`
+  width: 75px;
+  height: 40px;
+  font-size: 16px;
+  background-color: ${theme.palette.main};
+  color: white;
+`;
+
 export default function Home () {
   const [viewMode, setViewMode] = useState<'latest' | 'best'>('latest');
+  const navigate = useNavigate();
 
   return (
     <Root>
@@ -56,6 +76,11 @@ export default function Home () {
             </HeaderLabel>
           )
         }
+        <WriteButtonWrapper>
+          <WriteButton onClick={() => {
+            navigate('/write');
+          }}>글쓰기</WriteButton>
+        </WriteButtonWrapper>
         {
           viewMode === 'latest' ? (
             <LatestSection />

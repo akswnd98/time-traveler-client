@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil';
 import LoginPopup from './components/LoginPopup';
 import Signup from './pages/signup';
 import Login from './pages/login';
+import Write from './pages/write';
 
 const Root = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/write' element={<Write />} />
         </Routes>
         <LoginPopup />
         <Footer />

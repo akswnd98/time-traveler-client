@@ -11,7 +11,6 @@ const BestList = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 40px;
   flex-wrap: wrap;
   gap: 40px;
 `;

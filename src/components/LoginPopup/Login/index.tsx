@@ -4,7 +4,7 @@ import eastSvg from '@assets/east.svg';
 import googleSocialLoginSvg from '@assets/google-social-login.svg';
 import githubSocialLoginSvg from '@assets/github-social-login.svg';
 import { requestLoginApi } from '@src/api/BaseApi/GetApi/login/RequestLogin';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const Root = styled.div`
   width: 100%;
@@ -36,6 +36,19 @@ const EmailInput = styled(OutlinedInput)`
     border: none;
     padding: 0px;
   }
+`;
+
+const RequestSuccessInput = styled.div`
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
+  border-radius: 10px;
+  margin-top: 60px;
+  width: calc(100% - 8px);
+  height: 40px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 8px;
+  color: black;
 `;
 
 const TinyTitleWrapper = styled.div`
@@ -87,24 +100,37 @@ export type PropsType = {
 };
 
 export default function Login (props: PropsType) {
+  const [requestSuccess, setRequestSuccess] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const requestLogin = async () => {
+    await requestLoginApi.requestLogin({ email: inputRef.current!.value });
+    setRequestSuccess(true);
+  }
+
   return (
     <Root>
       <Title>로그인</Title>
-      <EmailInput
-        inputRef={inputRef}
-        endAdornment={
-          <East
-            src={eastSvg}
-            onClick={async () => await requestLoginApi.requestLogin({ email: inputRef.current!.value })}
+      {
+        !requestSuccess ? (
+          <EmailInput
+            inputRef={inputRef}
+            endAdornment={
+              <East
+                src={eastSvg}
+                onClick={async () => await requestLogin()}
+              />
+            }
+            onKeyDown={async (e) => {
+              if (e.key === 'Enter') {
+                await requestLogin();
+              }
+            }}
           />
-        }
-        onKeyDown={async (e) => {
-          if (e.key === 'Enter') {
-            await requestLoginApi.requestLogin({ email: inputRef.current!.value });
-          }
-        }}
-      />
+        ) : (
+          <RequestSuccessInput>인증 링크를 이메일에서 확인해주세요.</RequestSuccessInput>
+        )
+      }
       <TinyTitleWrapper>
         <TinyTitle>소셜 로그인</TinyTitle>
       </TinyTitleWrapper>
