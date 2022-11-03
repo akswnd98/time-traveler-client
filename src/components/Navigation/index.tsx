@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import theme from '@src/theme';
+import { useRecoilState } from 'recoil';
+import drawerState from '@src/states/drawer';
 import Buttons from './Buttons';
 import Logo from './Logo';
 import Search from './Search';
+import Drawer from './Drawer';
 
 const Root = styled.div`
   width: 100%;
@@ -20,6 +23,8 @@ const Main = styled.div`
 `;
 
 export default function Navigation() {
+  const [drawer] = useRecoilState(drawerState);
+
   return (
     <Root>
       <Main>
@@ -27,6 +32,7 @@ export default function Navigation() {
         <Search />
         <Buttons />
       </Main>
+      {drawer ? <Drawer /> : false}
     </Root>
   )
 }

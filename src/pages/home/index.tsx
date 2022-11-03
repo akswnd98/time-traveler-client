@@ -1,17 +1,26 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BestSection from './BestSection';
 import changeCircleSvg from '@assets/change-circle.svg';
 import { Button } from '@mui/material';
 import LatestSection from './LatestSection';
 import theme from '@src/theme';
 import { useNavigate } from 'react-router-dom';
+import Navigation from '@src/components/Navigation';
+import LoginPopup from '@src/components/LoginPopup';
+import Footer from '@src/components/Footer';
+import defaultAxiosInstance from '@src/api/defaultAxiosInstance';
 
 const Root = styled.div`
-  width: calc(100% / 6 * 4);
-  margin-left: calc(100% / 6);
-  padding-top: 40px;
-  padding-bottom: 150px;
+  width: 100%;
+  height: 100%;
+`;
+
+const Main = styled.div`
+width: calc(100% / 6 * 4);
+margin-left: calc(100% / 6);
+padding-top: 40px;
+padding-bottom: 150px;
 `;
 
 const HeaderLabel = styled(Button)`
@@ -19,6 +28,7 @@ const HeaderLabel = styled(Button)`
   justify-content: left;
   align-items: center;
   color: black;
+  font-family: NotoSansKR;
 `;
 
 const MajorLabel = styled.div`
@@ -50,6 +60,7 @@ const WriteButtonWrapper = styled.div`
 const WriteButton = styled(Button)`
   width: 75px;
   height: 40px;
+  font-family: NotoSansKR;
   font-size: 16px;
   background-color: ${theme.palette.main};
   color: white;
@@ -61,6 +72,8 @@ export default function Home () {
 
   return (
     <Root>
+      <Navigation />
+      <Main>
         {
           viewMode === 'latest' ? (
             <HeaderLabel onClick={() => setViewMode('best')}>
@@ -88,6 +101,9 @@ export default function Home () {
             <BestSection />
           )
         }
+      </Main>
+      <LoginPopup />
+      <Footer />
     </Root>
   );
 }

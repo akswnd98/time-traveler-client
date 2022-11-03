@@ -28,7 +28,6 @@ const Root = styled.div`
 export default function Login () {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    console.log(queryParams.get('uuid'));
     doAsyncTask(queryParams.get('uuid')!);
   }, []);
   return (

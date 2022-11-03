@@ -2,14 +2,16 @@ import styled from '@emotion/styled';
 import Column from './Column';
 import columnWidth from '../columnWidth';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 export type PropsType = {
   no: number;
   title: string;
   writer: string;
   writeDate: string;
-  views: number;
-  recommand: number;
+  // views: number;
+  // recommand: number;
 };
 
 const Root = styled(Button)`
@@ -21,17 +23,24 @@ const Root = styled(Button)`
   cursor: pointer;
   text-transform: none;
   color: black;
+  font-family: NotoSansKR;
 `;
 
 export default function Item (props: PropsType) {
+  const navigate = useNavigate();
+
   return (
-    <Root>
+    <Root
+      onClick={async () => {
+        navigate(`/post?no=${props.no}`);
+      }}
+    >
       <Column text={`${props.no}`} width={columnWidth.no} />
       <Column text={props.title} width={columnWidth.title} />
       <Column text={props.writer} width={columnWidth.writer} />
-      <Column text={props.writeDate} width={columnWidth.writeDate} />
-      <Column text={`${props.views}`} width={columnWidth.views} />
-      <Column text={`${props.recommand}`} width={columnWidth.recommand} />
+      <Column text={moment(props.writeDate).fromNow()} width={columnWidth.writeDate} />
+      {/* <Column text={`${props.views}`} width={columnWidth.views} />
+      <Column text={`${props.recommand}`} width={columnWidth.recommand} /> */}
     </Root>
   )
 }

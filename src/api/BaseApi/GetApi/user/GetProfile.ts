@@ -2,6 +2,7 @@ import defaultAxiosInstance from '@src/api/defaultAxiosInstance';
 import GetApi from '..';
 
 export type ResponseParam = {
+  id: number;
   email: string;
   nickname: string;
 };

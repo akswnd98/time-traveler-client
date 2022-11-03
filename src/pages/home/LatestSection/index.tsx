@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import Header from './Header';
-import demoDatas from './demoDatas';
 import Item from './Item';
+import { useEffect } from 'react';
+import MovePage from './action/MovePage';
+import Pagenation from './Pagenation';
 
 const Root = styled.div`
   width: 100%;
@@ -10,23 +12,42 @@ const Root = styled.div`
   display: flex:
 `;
 
+const PagenationWrapper = styled.div`
+  margin-top: 40px;
+`;
+
+const EmptySpace = styled.div`
+  width: 100%;
+  height: 40px;
+`;
+
 export default function LatestSection () {
+  const action = new MovePage();
+
+  useEffect(() => {
+    action.doAction(1);
+  }, []);
+
   return (
     <Root>
       <Header />
       {
-        demoDatas.map((v, i) => (
+        action.posts.map((v, i) => (
           <Item
             key={i}
-            no={v.no}
+            no={v.id}
             title={v.title}
             writer={v.writer}
-            writeDate={v.writeDate}
-            views={v.views}
-            recommand={v.recommand}
+            writeDate={v.firstUpload}
+            // views={v.views}
+            // recommand={v.recommand}
           />
         ))
       }
+      <PagenationWrapper>
+        <Pagenation action={action} />
+      </PagenationWrapper>
+      <EmptySpace />
     </Root>
   );
 }

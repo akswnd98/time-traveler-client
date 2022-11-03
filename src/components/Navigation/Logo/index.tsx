@@ -25,7 +25,12 @@ const LogoImg = styled.img`
 export default function Logo () {
   return (
     <Root>
-      <LogoButton startIcon={<LogoImg alt="logo" src={logoSvg} />}>Time Traveler</LogoButton>
+      <LogoButton
+        startIcon={<LogoImg alt="logo" src={logoSvg} />}
+        onClick={() => location.href = '/'}
+      >
+        Time Traveler
+      </LogoButton>
     </Root>
   )
 }

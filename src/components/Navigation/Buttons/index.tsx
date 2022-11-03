@@ -3,8 +3,8 @@ import githubSvg from '@assets/github.svg';
 import { Avatar, Button, IconButton } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import loginPopupState from '@src/states/loginPopup';
-import { useEffect, useState } from 'react';
-import { getProfileApi } from '@src/api/BaseApi/GetApi/user/GetProfile';
+import drawerState from '@src/states/drawer';
+import { isLogin } from '@src/data-binding/global/Account/IsLogin';
 
 const Root = styled.div`
   display: flex;
@@ -33,19 +33,7 @@ const AvatarButton = styled(IconButton)`
 
 export default function Buttons () {
   const [loginPopup, setLoginPopup] = useRecoilState(loginPopupState);
-  const [login, setLogin] = useState(false);
-
-  useEffect(() => {
-    const validateLogin = async () => {
-      try {
-        await getProfileApi.getProfile();
-        setLogin(true);
-      } catch (e) {
-        setLogin(false);
-      }
-    };
-    validateLogin();
-  }, []);
+  const [drawer, setDrawer] = useRecoilState(drawerState);
 
   return (
     <Root>
@@ -53,8 +41,10 @@ export default function Buttons () {
       <TextButton>Lotto 번호 적기</TextButton>
       <TextButton>About</TextButton>
       {
-        login ? (
-          <AvatarButton>
+        isLogin?.isLogin ? (
+          <AvatarButton
+            onClick={() => { setDrawer(!drawer) }}
+          >
             <Avatar />
           </AvatarButton>
         ) : (
