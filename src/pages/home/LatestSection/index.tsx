@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import Header from './Header';
 import Item from './Item';
 import { useEffect } from 'react';
-import MovePage from './action/MovePage';
-import Pagenation from './Pagenation';
+import { usePaginationModel } from './model/PaginationModel';
+import Pagination from './Pagination';
+import { useTotalPageNumModel } from './model/TotalPageNumModel';
 
 const Root = styled.div`
   width: 100%;
@@ -22,17 +23,21 @@ const EmptySpace = styled.div`
 `;
 
 export default function LatestSection () {
-  const action = new MovePage();
+  const paginationModel = usePaginationModel();
+  const totalPageNumModel = useTotalPageNumModel();
 
   useEffect(() => {
-    action.doAction(1);
+    totalPageNumModel.loadNum().then(() => {
+      console.log(totalPageNumModel.num);
+    });
+    paginationModel.setPage(1);
   }, []);
 
   return (
     <Root>
       <Header />
       {
-        action.posts.map((v, i) => (
+        paginationModel.posts.map((v, i) => (
           <Item
             key={i}
             no={v.id}
@@ -45,7 +50,10 @@ export default function LatestSection () {
         ))
       }
       <PagenationWrapper>
-        <Pagenation action={action} />
+        <Pagination
+          paginationModel={paginationModel}
+          totalPageNumModel={totalPageNumModel}
+        />
       </PagenationWrapper>
       <EmptySpace />
     </Root>

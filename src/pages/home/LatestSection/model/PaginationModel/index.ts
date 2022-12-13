@@ -1,21 +1,23 @@
-import Action from '@src/action';
 import React, { useState } from 'react';
 import { getLatestPostsApi, ResponseParam } from '@src/api/BaseApi/GetApi/post/GetLatestPosts';
 
-export default class MovePage extends Action<number> {
+export default class PaginationModel {
   readonly page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  protected setPageAction: React.Dispatch<React.SetStateAction<number>>
   readonly posts: ResponseParam['posts'];
-  setPosts: React.Dispatch<React.SetStateAction<ResponseParam['posts']>>
+  protected setPosts: React.Dispatch<React.SetStateAction<ResponseParam['posts']>>
 
   constructor () {
-    super();
-    [this.page, this.setPage] = useState(1);
+    [this.page, this.setPageAction] = useState(1);
     [this.posts, this.setPosts] = useState<ResponseParam['posts']>([]);
   }
 
-  async doAction (payload: number) {
-    this.setPage(payload);
+  async setPage (payload: number) {
+    this.setPageAction(payload);
     this.setPosts((await getLatestPostsApi.getLastestPosts({ page: payload })).posts);
   }
+}
+
+export function usePaginationModel () {
+  return new PaginationModel();
 }

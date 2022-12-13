@@ -75,20 +75,23 @@ export default function Home () {
       <Navigation />
       <Main>
         {
-          viewMode === 'latest' ? (
-            <HeaderLabel onClick={() => setViewMode('best')}>
-              <MajorLabel>최근</MajorLabel>
-              <ChangeCircle alt='change-circle' src={changeCircleSvg} />
-              <MinorLabel>베스트</MinorLabel>
-            </HeaderLabel>
-          ) : (
-            <HeaderLabel onClick={() => setViewMode('latest')}>
-              <MajorLabel>베스트</MajorLabel>
-              <ChangeCircle alt='change-circle' src={changeCircleSvg} />
-              <MinorLabel>최근</MinorLabel>
-            </HeaderLabel>
-          )
+//          viewMode === 'latest' ? (
+//            <HeaderLabel onClick={() => setViewMode('best')}>
+//              <MajorLabel>최근</MajorLabel>
+//              <ChangeCircle alt='change-circle' src={changeCircleSvg} />
+//              <MinorLabel>베스트</MinorLabel>
+//            </HeaderLabel>
+//          ) : (
+//            <HeaderLabel onClick={() => setViewMode('latest')}>
+//              <MajorLabel>베스트</MajorLabel>
+//              <ChangeCircle alt='change-circle' src={changeCircleSvg} />
+//              <MinorLabel>최근</MinorLabel>
+//            </HeaderLabel>
+//          )
         }
+        <HeaderLabel>
+          <MajorLabel>최근</MajorLabel>
+        </HeaderLabel>
         <WriteButtonWrapper>
           <WriteButton onClick={() => {
             navigate('/write');
