@@ -17,7 +17,10 @@ const Root = styled(Button)`
 
 export default function Item(props: ItemsProps) {
   return (
-    <Root startIcon={props.icon}>
+    <Root
+      onClick={props.onClick}
+      startIcon={props.icon}
+    >
       {props.text}
     </Root>
   );

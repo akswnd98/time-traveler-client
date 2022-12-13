@@ -9,6 +9,7 @@ import Post from './pages/post';
 import { useEffect } from 'react';
 import { getProfileApi } from './api/BaseApi/GetApi/user/GetProfile';
 import useAccount from './data-binding/global/Account';
+import MyPage from './pages/my-page';
 
 const Root = styled.div`
   width: 100%;
@@ -33,6 +34,7 @@ function App () {
           <Route path='/login' element={<Login />} />
           <Route path='/write' element={<Write />} />
           <Route path='/post' element={<Post />} />
+          <Route path='/my-page' element={<MyPage />} />
         </Routes>
       </Root>
     </RecoilRoot>

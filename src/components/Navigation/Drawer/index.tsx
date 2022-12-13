@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 import theme from '@src/theme';
 
+import MyPage from './Items/MyPage';
 import Alarm from './Items/Alarm';
 import Empty from './Items/Empty';
 import Logout from './Items/Logout';
@@ -25,6 +26,7 @@ const Root = styled(Box)`
 export default function Drawer() {
   return (
     <Root>
+      <MyPage />
       <ProfileEdit />
       <Alarm />
       <MyLike />
