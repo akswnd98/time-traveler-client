@@ -5,9 +5,9 @@ import { EditorState } from '@codemirror/state';
 import { useEffect, useRef } from 'react';
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
-import mdHtmlConverter from '@src/utils/mdHtmlConverter';
+import EditorBinder from '../binder/EditorBinder';
+import BodyInitializer from '../initializer/BodyInitializer';
 import { editorMarkdownModel } from './EditorMarkdownModel';
-import EditorBinder from '../model/EditorBinder';
 
 const Root = styled.div`
   width: 100%;
@@ -43,19 +43,22 @@ const editorTheme = EditorView.theme({
 });
 
 export type PropsType = {
-  initialBody: string;
-  // setViewerHtml: (html: string) => void;
+  bodyInitializer: BodyInitializer;
   editorBinder: EditorBinder;
 };
+
+let prevEditorView: EditorView | undefined = undefined;
 
 export default function Editor (props: PropsType) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    new EditorView({
-      state: EditorState.create({
-        doc: props.initialBody,
-      }),
+    prevEditorView?.destroy();
+    prevEditorView = new EditorView({
+      // state: EditorState.create({
+      //   doc: props.bodyInitializer.initialBody,
+      // }),
+      doc: props.bodyInitializer.initialBody,
       extensions: [
         markdown({
           base: markdownLanguage,
@@ -68,12 +71,13 @@ export default function Editor (props: PropsType) {
             props.editorBinder.reflectBody(
               e.state.doc.sliceString(0, e.state.doc.length),
             );
+            editorMarkdownModel.setMarkdown(e.state.doc.sliceString(0, e.state.doc.length));
           }
         }),
       ],
       parent: rootRef.current!,
     });
-  }, []);
+  }, [props.bodyInitializer.initialBody]);
   return (
     <Root
       ref={rootRef}

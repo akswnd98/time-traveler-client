@@ -9,16 +9,23 @@ import { editorMarkdownModel } from './Editor/EditorMarkdownModel';
 import mdHtmlConverter from '@src/utils/mdHtmlConverter';
 import { getPostApi } from '@src/api/BaseApi/GetApi/post/GetPost';
 import { updatePostApi } from '@src/api/BaseApi/PostApi/post/UpdatePost';
-import { useTitleBinder } from './model/TitleBinder';
-import { useEditorBinder } from './model/EditorBinder';
+import { useTitleBinder } from './binder/TitleBinder';
+import { useEditorBinder } from './binder/EditorBinder';
+import { useTitleInitializer } from './initializer/TitleInitializer';
+import { useBodyInitializer } from './initializer/BodyInitializer';
 
 let no: number | undefined = undefined;
 
 export default function Write () {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams()
-  const titleBinder = useTitleBinder();
-  const editorBinder = useEditorBinder();
+  const [searchParams] = useSearchParams();
+  const titleRef = useRef<HTMLTextAreaElement>(null)!;
+  const titleViewerRef = useRef<HTMLDivElement>(null)!;
+  const bodyViewerRef = useRef<HTMLDivElement>(null)!;
+  const titleBinder = useTitleBinder({ titleRef, titleViewerRef });
+  const titleInitializer = useTitleInitializer({ titleRef, titleViewerRef });
+  const editorBinder = useEditorBinder({ bodyViewerRef });
+  const bodyInitializer = useBodyInitializer({ bodyViewerRef });
 
   useEffect(() => {
     (async () => {
@@ -29,7 +36,8 @@ export default function Write () {
       }
       no = parseInt(noStr);
       const ret = await getPostApi.getPost({ id: no });
-      titleBinder.setTitle(ret.title);
+      titleInitializer.initializeTitle(ret.title);
+      bodyInitializer.initializeBody(ret.body);
     })();
   }, []);
 
@@ -46,7 +54,7 @@ export default function Write () {
             <TitleSeperator />
             <Editor
               editorBinder={editorBinder}
-              initialBody=''
+              bodyInitializer={bodyInitializer}
             />
           </TopMain>
         </Top>

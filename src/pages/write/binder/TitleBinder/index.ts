@@ -1,18 +1,15 @@
-import { useRef } from 'react';
+export type ConstructorParam = {
+  titleRef: React.RefObject<HTMLTextAreaElement>;
+  titleViewerRef: React.RefObject<HTMLDivElement>;
+};
 
 export default class TitleBinder {
   titleRef: React.RefObject<HTMLTextAreaElement>;
   titleViewerRef: React.RefObject<HTMLDivElement>;
 
-  constructor () {
-    this.titleRef = useRef<HTMLTextAreaElement>(null)!;
-    this.titleViewerRef = useRef<HTMLDivElement>(null)!;
-  }
-
-  setTitle (title: string) {
-    this.titleRef.current!.value = title;
-    this.autoResizeTextarea();
-    this.titleViewerRef.current!.innerHTML = title.replaceAll('\n', '<br />');
+  constructor (payload: ConstructorParam) {
+    this.titleRef = payload.titleRef;
+    this.titleViewerRef = payload.titleViewerRef;
   }
 
   reflectTitle () {
@@ -28,6 +25,6 @@ export default class TitleBinder {
   };
 }
 
-export function useTitleBinder () {
-  return new TitleBinder();
+export function useTitleBinder (payload: ConstructorParam) {
+  return new TitleBinder(payload);
 }

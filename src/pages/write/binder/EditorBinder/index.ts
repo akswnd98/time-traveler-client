@@ -1,11 +1,15 @@
 import { useRef } from 'react';
 import mdHtmlConverter from '@src/utils/mdHtmlConverter';
 
+export type ConstructorParam = {
+  bodyViewerRef: React.RefObject<HTMLDivElement>;
+};
+
 export default class EditorBinder {
   bodyViewerRef: React.RefObject<HTMLDivElement>;
 
-  constructor () {
-    this.bodyViewerRef = useRef<HTMLDivElement>(null)!;
+  constructor (payload: ConstructorParam) {
+    this.bodyViewerRef = payload.bodyViewerRef;
   }
 
   async reflectBody (body: string) {
@@ -13,6 +17,6 @@ export default class EditorBinder {
   }
 }
 
-export function useEditorBinder () {
-  return new EditorBinder();
+export function useEditorBinder (payload: ConstructorParam) {
+  return new EditorBinder(payload);
 }
