@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
+import theme from '@src/theme';
 
 import { ItemsProps } from './interface';
 
@@ -11,7 +12,7 @@ const Root = styled(Button)`
   align-items: center;
   font-family: NotoSansKR;
   font-size: 16px;
-  color: white;
+  color: ${theme.palette.main};
   padding-left: 15px;
 `;
 

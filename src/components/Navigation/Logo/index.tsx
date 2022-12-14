@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import logoSvg from '@src/assets/logo.svg';
+import theme from '@src/theme';
 
 const Root = styled.div`
   height: 100%;
@@ -15,6 +16,7 @@ const LogoButton = styled(Button)`
   margin-left: 8px;
   color: white;
   text-transform: none;
+  color: ${theme.palette.main};
 `;
 
 const LogoImg = styled.img`

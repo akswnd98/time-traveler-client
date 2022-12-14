@@ -13,7 +13,6 @@ import Settings from './Items/Settings';
 const Root = styled(Box)`
   width: 165px;
   border-radius: 10px;
-  background-color: ${theme.palette.main};
   padding-top: 10px;
   padding-bottom: 10px;
   user-select: none;
@@ -21,6 +20,7 @@ const Root = styled(Box)`
   right: calc(100% / 6);
   z-index: 200;
   color: white;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
 `;
 
 export default function Drawer() {

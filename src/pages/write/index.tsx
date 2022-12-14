@@ -1,11 +1,107 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Editor from './Editor';
 import 'katex/dist/katex.min.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { uploadPostApi } from '@src/api/BaseApi/PostApi/post/UploadPost';
 import { editorMarkdownModel } from './Editor/EditorMarkdownModel';
+import mdHtmlConverter from '@src/utils/mdHtmlConverter';
+import { getPostApi } from '@src/api/BaseApi/GetApi/post/GetPost';
+import { updatePostApi } from '@src/api/BaseApi/PostApi/post/UpdatePost';
+
+let no: number | undefined = undefined;
+
+export default function Write () {
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+  const titleViewerRef = useRef<HTMLDivElement>(null);
+  const bodyViewerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams()
+  
+  const setViewerHtml = (html: string) => {
+    bodyViewerRef.current!.innerHTML = html;
+  };
+  
+  const setTitle = (title: string) => {
+    titleViewerRef.current!.innerHTML = title.replaceAll('\n', '<br />');
+  }
+
+  const autoResizeTextarea = () => {
+    titleRef.current!.style.height = `1px`;
+    const scrollHeight = titleRef.current!.scrollHeight;
+    titleRef.current!.style.height = `${scrollHeight + 8}px`;
+  };
+
+  const handleTitleInput = () => {
+    autoResizeTextarea();
+    setTitle(titleRef.current!.value);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const noStr = searchParams.get('no');
+      if (noStr === null) {
+        no = undefined;
+        return;
+      }
+      no = parseInt(noStr);
+      const ret = await getPostApi.getPost({ id: no });
+      setTitle(ret.title);
+      setViewerHtml((await mdHtmlConverter.process(ret.body)).toString());
+    })();
+  }, []);
+
+  return (
+    <Root>
+      <Left>
+        <Top>
+          <TopMain>
+            <Title
+              placeholder='제목을 입력해주세요.'
+              ref={titleRef}
+              onInput={handleTitleInput}
+            />
+            <TitleSeperator />
+            <Editor
+              setViewerHtml={setViewerHtml}
+            />
+          </TopMain>
+        </Top>
+        <Bottom>
+          <OutButton
+            onClick={() => navigate('/')}
+          >
+            나가기
+          </OutButton>
+          <RightButtons>
+            <TempSaveButton>임시저장</TempSaveButton>
+            <UploadButton
+              onClick={() => {
+                if (no === undefined) {
+                  uploadPostApi.uploadPost({ title: titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
+                } else {
+                  updatePostApi.updatePost({ id: no, title: titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
+                }
+                location.href = '/my-page';
+              }}
+            >
+              올리기
+            </UploadButton>
+          </RightButtons>
+        </Bottom>
+      </Left>
+      <Right>
+        <TitleViewer
+          ref={titleViewerRef}
+        />
+        <BodyViewer
+          ref={bodyViewerRef}
+        />
+      </Right>
+    </Root>
+  );
+}
 
 const Root = styled.div`
   width: 100%;
@@ -146,72 +242,3 @@ const TempSaveButton = styled(Button)`
   color: #012759;
   font-weight: bold;
 `;
-
-export default function Write () {
-  const titleRef = useRef<HTMLTextAreaElement>(null);
-  const titleViewerRef = useRef<HTMLDivElement>(null);
-  const bodyViewerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  
-  const setViewerHtml = (html: string) => {
-    bodyViewerRef.current!.innerHTML = html;
-  };
-  
-  const setTitle = (title: string) => {
-    titleViewerRef.current!.innerHTML = title.replaceAll('\n', '<br />');
-  }
-
-  const autoResizeTextarea = () => {
-    titleRef.current!.style.height = `1px`;
-    const scrollHeight = titleRef.current!.scrollHeight;
-    titleRef.current!.style.height = `${scrollHeight + 8}px`;
-  };
-
-  const handleTitleInput = () => {
-    autoResizeTextarea();
-    setTitle(titleRef.current!.value);
-  };
-
-  return (
-    <Root>
-      <Left>
-        <Top>
-          <TopMain>
-            <Title
-              placeholder='제목을 입력해주세요.'
-              ref={titleRef}
-              onInput={handleTitleInput}
-            />
-            <TitleSeperator />
-            <Editor
-              setViewerHtml={setViewerHtml}
-            />
-          </TopMain>
-        </Top>
-        <Bottom>
-          <OutButton
-            onClick={() => navigate('/')}
-          >
-            나가기
-          </OutButton>
-          <RightButtons>
-            <TempSaveButton>임시저장</TempSaveButton>
-            <UploadButton
-              onClick={() => uploadPostApi.uploadPost({ title: titleRef.current!.value, body: editorMarkdownModel.getMarkdown() })}
-            >
-              올리기
-            </UploadButton>
-          </RightButtons>
-        </Bottom>
-      </Left>
-      <Right>
-        <TitleViewer
-          ref={titleViewerRef}
-        />
-        <BodyViewer
-          ref={bodyViewerRef}
-        />
-      </Right>
-    </Root>
-  );
-}

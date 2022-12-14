@@ -17,10 +17,10 @@ const Root = styled.div`
 `;
 
 const Main = styled.div`
-width: calc(100% / 6 * 4);
-margin-left: calc(100% / 6);
-padding-top: 40px;
-padding-bottom: 150px;
+  width: calc(100% / 6 * 4);
+  margin-left: calc(100% / 6);
+  margin-top: 150px;
+  padding-bottom: 150px;
 `;
 
 const HeaderLabel = styled(Button)`

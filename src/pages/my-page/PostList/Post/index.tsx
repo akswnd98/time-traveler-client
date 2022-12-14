@@ -1,23 +1,25 @@
 import { styled } from '@mui/material';
+import { MyPostSearched } from '@src/api/BaseApi/GetApi/post/SearchMyPosts';
+import moment from 'moment';
 
-export default function Post () {
+export type PropsType = MyPostSearched;
+
+export default function Post (props: PropsType) {
   return (
-    <Root>
-      <Title>이것은 글이다</Title>
+    <Root onClick={() => location.href = `/write?no=${props.id}`}>
+      <Title>{props.title}</Title>
       <BodyPart>
-        팬픽시브(FanFixiv)
-        <br />
-        팬픽시브는 2차창작물 번역 커뮤니티입니다.
-        <br />
-        기획의도
+        {props.bodyPart.replace('\n', '<br />')}
       </BodyPart>
-      <Meta>2022년 3월 23일</Meta>
+      <Meta>{moment(props.firstUpload).fromNow()}</Meta>
     </Root>
   );
 }
 
 const Root = styled('div')`
-
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Title = styled('div')`

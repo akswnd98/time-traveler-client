@@ -5,6 +5,8 @@ import searchSvg from '@assets/search.svg';
 const Root = styled.div`
   width: 530px;
   height: 40px;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
+  border-radius: 10px;
 `;
 
 const SearchBox = styled(OutlinedInput)`

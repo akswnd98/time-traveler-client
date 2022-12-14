@@ -10,7 +10,7 @@ import Drawer from './Drawer';
 const Root = styled.div`
   width: 100%;
   height: 64px;
-  background-color: ${theme.palette.main};
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
 `;
 
 const Main = styled.div`
