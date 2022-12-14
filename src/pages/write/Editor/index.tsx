@@ -7,6 +7,7 @@ import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
 import mdHtmlConverter from '@src/utils/mdHtmlConverter';
 import { editorMarkdownModel } from './EditorMarkdownModel';
+import EditorBinder from '../model/EditorBinder';
 
 const Root = styled.div`
   width: 100%;
@@ -42,7 +43,9 @@ const editorTheme = EditorView.theme({
 });
 
 export type PropsType = {
-  setViewerHtml: (html: string) => void;
+  initialBody: string;
+  // setViewerHtml: (html: string) => void;
+  editorBinder: EditorBinder;
 };
 
 export default function Editor (props: PropsType) {
@@ -50,9 +53,9 @@ export default function Editor (props: PropsType) {
 
   useEffect(() => {
     new EditorView({
-      // state: EditorState.create({
-      //   doc: '',
-      // }),
+      state: EditorState.create({
+        doc: props.initialBody,
+      }),
       extensions: [
         markdown({
           base: markdownLanguage,
@@ -62,8 +65,9 @@ export default function Editor (props: PropsType) {
         placeholder('새로운 아이디어...'),
         EditorView.updateListener.of(async (e) => {
           if (e.docChanged) {
-            props.setViewerHtml((await mdHtmlConverter.process(e.state.doc.sliceString(0, e.state.doc.length))).toString());
-            editorMarkdownModel.setMarkdown(e.state.doc.sliceString(0, e.state.doc.length));
+            props.editorBinder.reflectBody(
+              e.state.doc.sliceString(0, e.state.doc.length),
+            );
           }
         }),
       ],

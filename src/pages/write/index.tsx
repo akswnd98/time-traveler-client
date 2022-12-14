@@ -9,34 +9,16 @@ import { editorMarkdownModel } from './Editor/EditorMarkdownModel';
 import mdHtmlConverter from '@src/utils/mdHtmlConverter';
 import { getPostApi } from '@src/api/BaseApi/GetApi/post/GetPost';
 import { updatePostApi } from '@src/api/BaseApi/PostApi/post/UpdatePost';
+import { useTitleBinder } from './model/TitleBinder';
+import { useEditorBinder } from './model/EditorBinder';
 
 let no: number | undefined = undefined;
 
 export default function Write () {
-  const titleRef = useRef<HTMLTextAreaElement>(null);
-  const titleViewerRef = useRef<HTMLDivElement>(null);
-  const bodyViewerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams()
-  
-  const setViewerHtml = (html: string) => {
-    bodyViewerRef.current!.innerHTML = html;
-  };
-  
-  const setTitle = (title: string) => {
-    titleViewerRef.current!.innerHTML = title.replaceAll('\n', '<br />');
-  }
-
-  const autoResizeTextarea = () => {
-    titleRef.current!.style.height = `1px`;
-    const scrollHeight = titleRef.current!.scrollHeight;
-    titleRef.current!.style.height = `${scrollHeight + 8}px`;
-  };
-
-  const handleTitleInput = () => {
-    autoResizeTextarea();
-    setTitle(titleRef.current!.value);
-  };
+  const titleBinder = useTitleBinder();
+  const editorBinder = useEditorBinder();
 
   useEffect(() => {
     (async () => {
@@ -47,8 +29,7 @@ export default function Write () {
       }
       no = parseInt(noStr);
       const ret = await getPostApi.getPost({ id: no });
-      setTitle(ret.title);
-      setViewerHtml((await mdHtmlConverter.process(ret.body)).toString());
+      titleBinder.setTitle(ret.title);
     })();
   }, []);
 
@@ -59,12 +40,13 @@ export default function Write () {
           <TopMain>
             <Title
               placeholder='제목을 입력해주세요.'
-              ref={titleRef}
-              onInput={handleTitleInput}
+              ref={titleBinder.titleRef}
+              onInput={() => titleBinder.reflectTitle()}
             />
             <TitleSeperator />
             <Editor
-              setViewerHtml={setViewerHtml}
+              editorBinder={editorBinder}
+              initialBody=''
             />
           </TopMain>
         </Top>
@@ -79,9 +61,9 @@ export default function Write () {
             <UploadButton
               onClick={() => {
                 if (no === undefined) {
-                  uploadPostApi.uploadPost({ title: titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
+                  uploadPostApi.uploadPost({ title: titleBinder.titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
                 } else {
-                  updatePostApi.updatePost({ id: no, title: titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
+                  updatePostApi.updatePost({ id: no, title: titleBinder.titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
                 }
                 location.href = '/my-page';
               }}
@@ -93,10 +75,10 @@ export default function Write () {
       </Left>
       <Right>
         <TitleViewer
-          ref={titleViewerRef}
+          ref={titleBinder.titleViewerRef}
         />
         <BodyViewer
-          ref={bodyViewerRef}
+          ref={editorBinder.bodyViewerRef}
         />
       </Right>
     </Root>
