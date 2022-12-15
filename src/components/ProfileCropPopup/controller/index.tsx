@@ -37,6 +37,10 @@ export default class Controller {
     this.setCroppedImageState(croppedImage);
     this.setProfileCropPopupState(false);
   }
+
+  closeWithoutApply () {
+    this.setProfileCropPopupState(false);
+  }
 }
 
 export function useController () {

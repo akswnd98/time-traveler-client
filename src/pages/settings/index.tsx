@@ -1,43 +1,42 @@
-import { Button, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import Navigation from '@src/components/Navigation';
-import Cropper from 'cropperjs';
 import { useEffect, useRef } from 'react';
 import blackholeQhd from '@assets/blackhole-qhd.png';
 import 'cropperjs/dist/cropper.css';
 import ProfileCropPopup from '@src/components/ProfileCropPopup';
-import profileCropPopupState from '@src/states/profileCropPopup';
-import { useRecoilState } from 'recoil';
+import { useController } from '@src/components/ProfileCropPopup/controller';
 
 export default function Settings () {
-  const cropperWrapperRef = useRef<HTMLImageElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [_, setProfileCropPopup] = useRecoilState(profileCropPopupState);
-
-  useEffect(() => {
-    fileInputRef.current!.addEventListener('change', (e) => {
-      const selectedFiles = fileInputRef.current!.files;
-      if (selectedFiles === null) {
-        return;
-      }
-      console.log(selectedFiles[0]);
-    });
-    const cropper = new Cropper(cropperWrapperRef.current!, {
-      aspectRatio: 1,
-    });
-  }, []);
+  const controller = useController();
 
   return (
     <Root>
       <Navigation />
       <Main>
-        <FileInputLabel htmlFor='file-input'>
-          <FileInputLabelDiv>이미지 업로드</FileInputLabelDiv>
-        </FileInputLabel>
-        <FileInput id='file-input' type='file' ref={fileInputRef} />
-        <ImageRemove>이미지 제거</ImageRemove>
-        <CropImageWrapper>
-          <CropImage src={blackholeQhd} ref={cropperWrapperRef} />
-        </CropImageWrapper>
+        <ProfileWrapperLeft>
+          <ProfileImage src={controller.croppedImage} />
+          <FileInputLabel htmlFor='file-input'>
+            <FileInputLabelDiv>이미지 업로드</FileInputLabelDiv>
+          </FileInputLabel>
+          <FileInput
+            id='file-input'
+            type='file'
+            ref={fileInputRef}
+            onChange={(e) => {
+              if (e.currentTarget.files === null) {
+                return;
+              }
+              const reader = new FileReader();
+              reader.addEventListener('load', () => {
+                controller.open(reader.result as string);
+                fileInputRef.current!.value = '';
+              });
+              reader.readAsDataURL(e.currentTarget.files[0]);
+            }}
+          />
+          <ImageRemove>이미지 제거</ImageRemove>
+        </ProfileWrapperLeft>
       </Main>
       <ProfileCropPopup />
     </Root>
@@ -54,8 +53,21 @@ const Main = styled('div')`
   margin-top: 150px;
 `;
 
+const ProfileWrapperLeft = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+`;
+
+const ProfileImage = styled('img')`
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+`;
+
 const FileInputLabel = styled('label')`
-  display: inline-block;
+  display: block;
   width: 150px;
   height: 40px;
   border-radius: 10px;
@@ -91,13 +103,5 @@ const ImageRemove = styled('div')`
   cursor: pointer;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
   border-radius: 10px;
-`;
-
-const CropImageWrapper = styled('div')`
-  width: 100%;
-`;
-
-const CropImage = styled('img')`
-  display: block;
-  width: 100%;
+  margin-top: 8px;
 `;

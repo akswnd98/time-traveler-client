@@ -47,36 +47,36 @@ export type PropsType = {
   editorBinder: EditorBinder;
 };
 
-let prevEditorView: EditorView | undefined = undefined;
+let editorView: EditorView | undefined = undefined;
 
 export default function Editor (props: PropsType) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    prevEditorView?.destroy();
-    prevEditorView = new EditorView({
-      // state: EditorState.create({
-      //   doc: props.bodyInitializer.initialBody,
-      // }),
-      doc: props.bodyInitializer.initialBody,
-      extensions: [
-        markdown({
-          base: markdownLanguage,
-        }),
-        syntaxHighlighting(markdownHighlighting),
-        editorTheme,
-        placeholder('새로운 아이디어...'),
-        EditorView.updateListener.of(async (e) => {
-          if (e.docChanged) {
-            props.editorBinder.reflectBody(
-              e.state.doc.sliceString(0, e.state.doc.length),
-            );
-            editorMarkdownModel.setMarkdown(e.state.doc.sliceString(0, e.state.doc.length));
-          }
-        }),
-      ],
+    editorView?.destroy();
+    editorView = new EditorView({
+      state: EditorState.create({
+        doc: props.bodyInitializer.initialBody,
+        extensions: [
+          markdown({
+            base: markdownLanguage,
+          }),
+          syntaxHighlighting(markdownHighlighting),
+          editorTheme,
+          placeholder('새로운 아이디어...'),
+          EditorView.updateListener.of(async (e) => {
+            if (e.docChanged) {
+              props.editorBinder.reflectBody(
+                e.state.doc.sliceString(0, e.state.doc.length),
+              );
+              editorMarkdownModel.setMarkdown(e.state.doc.sliceString(0, e.state.doc.length));
+            }
+          }),
+        ],
+      }),
       parent: rootRef.current!,
     });
+    editorMarkdownModel.setMarkdown(editorView.state.doc.sliceString(0, editorView.state.doc.length));
   }, [props.bodyInitializer.initialBody]);
   return (
     <Root
