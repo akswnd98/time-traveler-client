@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import theme from '@src/theme';
 import { useRecoilState } from 'recoil';
 import drawerState from '@src/states/drawer';
 import Buttons from './Buttons';
@@ -11,6 +10,9 @@ const Root = styled.div`
   width: 100%;
   height: 64px;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
+  position: relative;
+  z-index: 200;
+  background-color: white;
 `;
 
 const Main = styled.div`

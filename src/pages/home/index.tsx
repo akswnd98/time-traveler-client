@@ -21,6 +21,8 @@ const Main = styled.div`
   margin-left: calc(100% / 6);
   margin-top: 150px;
   padding-bottom: 150px;
+  position: relative;
+  z-index: 0;
 `;
 
 const HeaderLabel = styled(Button)`

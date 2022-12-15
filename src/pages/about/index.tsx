@@ -45,6 +45,7 @@ const Root = styled('div')`
 
 const Main = styled('div')`
   position: relative;
+  z-index: 0;
   height: 0;
   padding-bottom: max(1080px, calc(1440 / 2560 * 100%));
   background-color: black;
