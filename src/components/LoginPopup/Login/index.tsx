@@ -131,7 +131,7 @@ export default function Login (props: PropsType) {
           <RequestSuccessInput>인증 링크를 이메일에서 확인해주세요.</RequestSuccessInput>
         )
       }
-      <TinyTitleWrapper>
+      {/* <TinyTitleWrapper>
         <TinyTitle>소셜 로그인</TinyTitle>
       </TinyTitleWrapper>
       <SocialLoginButtons>
@@ -141,7 +141,7 @@ export default function Login (props: PropsType) {
         <SocialLoginButton>
           <SocialLoginImg src={githubSocialLoginSvg} />
         </SocialLoginButton>
-      </SocialLoginButtons>
+      </SocialLoginButtons> */}
       <SignupButtonWrapper>
         <SignupButton onClick={() => props.setPopupMode('signup')}>회원가입</SignupButton>
       </SignupButtonWrapper>

@@ -65,7 +65,7 @@ export default function Write () {
             나가기
           </OutButton>
           <RightButtons>
-            <TempSaveButton>임시저장</TempSaveButton>
+            {/* <TempSaveButton>임시저장</TempSaveButton> */}
             <UploadButton
               onClick={() => {
                 if (no === undefined) {
