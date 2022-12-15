@@ -27,9 +27,9 @@ export default function Drawer() {
   return (
     <Root>
       <MyPage />
-      <ProfileEdit />
-      <Alarm />
-      <MyLike />
+      {/* <ProfileEdit /> */}
+      {/* <Alarm /> */}
+      {/* <MyLike /> */}
       <Empty />
       <Settings />
       <Logout />
