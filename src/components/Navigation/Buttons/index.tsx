@@ -15,8 +15,8 @@ export default function Buttons () {
   return (
     <Root>
       {/* <IconButton><GithubLogo src={githubSvg} /></IconButton> */}
-      <IconButton><SvgIcon sx={{ width: 40, height: 40 }} viewBox="0 0 40 40" component={Github} /></IconButton>
-      <TextButton>Lotto 번호 적기</TextButton>
+      <IconButton onClick={() => location.href = 'https://github.com/akswnd98/time-traveler-client'}><SvgIcon sx={{ width: 40, height: 40 }} viewBox="0 0 40 40" component={Github} /></IconButton>
+      {/* <TextButton>Lotto 번호 적기</TextButton> */}
       <TextButton onClick={() => location.href = '/about'}>About</TextButton>
       {
         isLogin?.isLogin ? (
