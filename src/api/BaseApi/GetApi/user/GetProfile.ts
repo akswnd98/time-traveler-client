@@ -5,6 +5,7 @@ export type ResponseParam = {
   id: number;
   email: string;
   nickname: string;
+  profileImageUrl: string;
 };
 
 export default class GetProfile extends GetApi<void, ResponseParam> {

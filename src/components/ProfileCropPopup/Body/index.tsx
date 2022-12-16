@@ -4,6 +4,8 @@ import { useEffect, useRef } from 'react';
 import Cropper from 'cropperjs';
 import { Button } from '@mui/material';
 import theme from '@src/theme';
+import { uploadProfileImageApi } from '@src/api/BaseApi/PostApi/user/UploadProfileImage';
+import { getProfileApi } from '@src/api/BaseApi/GetApi/user/GetProfile';
 
 export default function Body () {
   const controller = useController();
@@ -11,27 +13,28 @@ export default function Body () {
 
   let cropper: Cropper | undefined = undefined
   useEffect(() => {
-    cropper = new Cropper(cropImageRef.current!, {
-      aspectRatio: 1,
-    });
+    (async () => {
+      cropper = new Cropper(cropImageRef.current!, {
+        aspectRatio: 1,
+      });
+    })();
   }, []);
 
   return (
     <Root>
       <CropImage src={controller.profileImage} ref={cropImageRef} />
       <ApplyButton onClick={() => {
-        // cropper!.getCroppedCanvas().toBlob(async (blob) => {
-        //   const form = new FormData();
-        //   form.append(
-        //     'file',
-        //     new File([blob!], 'temp.png', {
-        //       type: 'image/png',
-        //     }),
-        //   );
-        // });
-        const dataURL = cropper!.getCroppedCanvas().toDataURL('image/png');
-        console.log(dataURL);
-        controller.applyCrop(dataURL);
+        cropper!.getCroppedCanvas().toBlob(async (blob) => {
+          const form = new FormData();
+          form.append(
+            'file',
+            new File([blob!], 'temp.png', {
+              type: 'image/png',
+            }),
+          );
+          const ret = await uploadProfileImageApi.uploadProfileImage(form);
+          controller.applyCrop(ret.imageUrl);
+        });
       }}>
         적용
       </ApplyButton>

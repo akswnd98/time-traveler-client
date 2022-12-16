@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import Navigation from '@src/components/Navigation';
 import { useEffect, useRef } from 'react';
-import blackholeQhd from '@assets/blackhole-qhd.png';
 import 'cropperjs/dist/cropper.css';
 import ProfileCropPopup from '@src/components/ProfileCropPopup';
 import { useController } from '@src/components/ProfileCropPopup/controller';
@@ -9,6 +8,12 @@ import { useController } from '@src/components/ProfileCropPopup/controller';
 export default function Settings () {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const controller = useController();
+
+  useEffect(() => {
+    (async () => {
+      await controller.initializeProfileImage();
+    })();
+  }, []);
 
   return (
     <Root>
@@ -71,6 +76,7 @@ const FileInputLabel = styled('label')`
   width: 150px;
   height: 40px;
   border-radius: 10px;
+  margin-top: 8px;
 `;
 
 const FileInputLabelDiv = styled('div')`

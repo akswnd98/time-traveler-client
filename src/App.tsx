@@ -7,7 +7,7 @@ import Login from './pages/login';
 import Write from './pages/write';
 import Post from './pages/post';
 import { useEffect } from 'react';
-import { getProfileApi } from './api/BaseApi/GetApi/user/GetProfile';
+import { getMyProfileApi } from './api/BaseApi/GetApi/user/GetMyProfile';
 import useAccount from './data-binding/global/Account';
 import MyPage from './pages/my-page';
 import About from './pages/about';
@@ -23,7 +23,7 @@ function App () {
 
   useEffect(() => {
     (async () => {
-      await account.updateAccount(await getProfileApi.getProfile());
+      await account.updateAccount(await getMyProfileApi.getMyProfile());
     })();
   }, []);
 

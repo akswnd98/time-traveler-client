@@ -1,3 +1,4 @@
+import { getMyProfileApi } from '@src/api/BaseApi/GetApi/user/GetMyProfile';
 import { atom, useRecoilState } from 'recoil';
 
 export default class Controller {
@@ -26,6 +27,11 @@ export default class Controller {
     [this.profileCropPopup, this.setProfileCropPopupState] = useRecoilState<boolean>(Controller.profileCropPopupAtom);
     [this.profileImage, this.setProfileImageState] = useRecoilState<string>(Controller.profileImageAtom);
     [this.croppedImage, this.setCroppedImageState] = useRecoilState<string>(Controller.croppedImageAtom);
+  }
+
+  async initializeProfileImage () {
+    const profile = await getMyProfileApi.getMyProfile();
+    this.setCroppedImageState(profile.profileImageUrl);
   }
 
   open (profileImage: string) {
