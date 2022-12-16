@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { profile } from '@src/data-binding/global/Account/Profile';
+import { useProfile } from '@src/data-binding/global/Account/Profile';
 import theme from '@src/theme';
 import moment from 'moment';
 import Action from './action';
+import { Avatar } from '@mui/material';
 
 const Root = styled.div`
   width: calc(100% - 40px);
@@ -48,7 +49,7 @@ const DeleteButton = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled(Avatar)`
   width: 60px;
   height: 60px;
   background-color: gray;
@@ -83,18 +84,20 @@ export type PropsType = {
   id: number;
   writerId: number;
   writer: string;
+  writerProfileImageUrl: string
   firstUpload: string;
   body: string;
 };
 
 export default function Discussion (props: PropsType) {
   const action = new Action({ id: props.id });
+  const profile = useProfile();
+
   return (
     <Root>
       <Top>
         <Meta>
-          <Profile>
-          </Profile>
+          <Profile src={props.writerProfileImageUrl} />
           <NicknameAndUploadDate>
             <Nickname>{props.writer}</Nickname>
             <UploadDate>{moment(props.firstUpload).fromNow()}</UploadDate>
@@ -103,7 +106,7 @@ export default function Discussion (props: PropsType) {
         <Console>
           {/* <EditButton>수정</EditButton> */}
           {
-            profile?.profile.id === props.writerId && (
+            profile.profile.id === props.writerId && (
               <DeleteButton
                 onClick={() => action.doAction()}
               >

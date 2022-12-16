@@ -1,28 +1,32 @@
-import { styled } from '@mui/material';
+import { Avatar, styled } from '@mui/material';
 import Navigation from '@src/components/Navigation';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import 'cropperjs/dist/cropper.css';
 import ProfileCropPopup from '@src/components/ProfileCropPopup';
 import { useController } from '@src/components/ProfileCropPopup/controller';
+import { useProfile } from '@src/data-binding/global/Account/Profile';
+import { clearProfileImageApi } from '@src/api/BaseApi/PostApi/user/ClearProfileImage';
+import { useUpdateProfileImageNotifier } from '@src/data-binding/global/Account/UpdateProfileImageNotifier';
 
 export default function Settings () {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const controller = useController();
-
-  useEffect(() => {
-    (async () => {
-      await controller.initializeProfileImage();
-    })();
-  }, []);
+  const profile = useProfile();
+  const updateProfileImageNotifier = useUpdateProfileImageNotifier();
 
   return (
     <Root>
       <Navigation />
       <Main>
         <ProfileWrapperLeft>
-          <ProfileImage src={controller.croppedImage} />
           <FileInputLabel htmlFor='file-input'>
-            <FileInputLabelDiv>이미지 업로드</FileInputLabelDiv>
+            {
+              profile.profile.profileImageUrl === '' ? (
+                <EmptyAvatar />
+              ) : (
+                <ProfileImage src={profile.profile.profileImageUrl} />
+              )
+            }
           </FileInputLabel>
           <FileInput
             id='file-input'
@@ -40,7 +44,12 @@ export default function Settings () {
               reader.readAsDataURL(e.currentTarget.files[0]);
             }}
           />
-          <ImageRemove>이미지 제거</ImageRemove>
+          <ImageRemove onClick={async () => {
+            await clearProfileImageApi.clearProfileImage();
+            await updateProfileImageNotifier.updateProfileImage('');
+          }}>
+            이미지 제거
+          </ImageRemove>
         </ProfileWrapperLeft>
       </Main>
       <ProfileCropPopup />
@@ -62,21 +71,28 @@ const ProfileWrapperLeft = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: left;
+  align-items: center;
+`;
+
+const EmptyAvatar = styled(Avatar)`
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
 `;
 
 const ProfileImage = styled('img')`
   width: 160px;
   height: 160px;
   border-radius: 80px;
+  cursor: pointer;
+  display: block;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 5%);
 `;
 
 const FileInputLabel = styled('label')`
   display: block;
-  width: 150px;
-  height: 40px;
-  border-radius: 10px;
-  margin-top: 8px;
 `;
 
 const FileInputLabelDiv = styled('div')`

@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
-import githubSvg from '@assets/github.svg';
 import { Avatar, Button, IconButton, SvgIcon } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import loginPopupState from '@src/states/loginPopup';
 import drawerState from '@src/states/drawer';
-import { isLogin } from '@src/data-binding/global/Account/IsLogin';
 import theme from '@src/theme';
 import Github from '@src/assets/icons/Github';
+import { useProfile } from '@src/data-binding/global/Account/Profile';
+import { useIsLogin } from '@src/data-binding/global/Account/IsLogin';
 
 export default function Buttons () {
   const [loginPopup, setLoginPopup] = useRecoilState(loginPopupState);
   const [drawer, setDrawer] = useRecoilState(drawerState);
+  const profile = useProfile();
+  const isLogin = useIsLogin();
 
   return (
     <Root>
@@ -23,7 +25,7 @@ export default function Buttons () {
           <AvatarButton
             onClick={() => { setDrawer(!drawer) }}
           >
-            <Avatar />
+            <Avatar src={profile.profile.profileImageUrl} />
           </AvatarButton>
         ) : (
           <TextButton onClick={() => setLoginPopup(!loginPopup)}>Login</TextButton>

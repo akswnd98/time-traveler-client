@@ -26,7 +26,6 @@ export default class PostListModel {
     this.setPostsState((cur) => {
       return [...cur, ...ret.posts];
     });
-    console.log(this.posts);
   }
 
   async updateKeyword (keyword: string) {

@@ -36,6 +36,7 @@ export default function Discussions () {
               id={v.id}
               writerId={v.writerId}
               writer={v.writer}
+              writerProfileImageUrl={v.writerProfileImageUrl}
               firstUpload={v.firstUpload}
               body={v.body}
             />

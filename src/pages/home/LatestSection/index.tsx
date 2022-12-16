@@ -27,9 +27,7 @@ export default function LatestSection () {
   const totalPageNumModel = useTotalPageNumModel();
 
   useEffect(() => {
-    totalPageNumModel.loadNum().then(() => {
-      console.log(totalPageNumModel.num);
-    });
+    totalPageNumModel.loadNum();
     paginationModel.setPage(1);
   }, []);
 

@@ -4,6 +4,7 @@ export type EventType = {
   id: number;
   nickname: string;
   email: string;
+  profileImageUrl: string;
 };
 
 export default class Account extends Notifier<EventType> {

@@ -11,6 +11,7 @@ export type ResponseParam = {
     body: string;
     writerId: number;
     writer: string;
+    writerProfileImageUrl: string;
     firstUpload: string;
     isEdited: boolean;
   }[]

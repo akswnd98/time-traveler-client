@@ -11,7 +11,7 @@ export default function MyPage () {
       <Navigation />
       <TabWrapper>
         <Tab isSelected={true} text='글' />
-        <Tab isSelected={false} text='소개' />
+        {/* <Tab isSelected={false} text='소개' /> */}
       </TabWrapper>
       <PostListWrapper>
         <PostList />

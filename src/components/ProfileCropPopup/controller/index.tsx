@@ -1,4 +1,6 @@
 import { getMyProfileApi } from '@src/api/BaseApi/GetApi/user/GetMyProfile';
+import Profile, { useProfile } from '@src/data-binding/global/Account/Profile';
+import UpdateProfileImageNotifier, { useUpdateProfileImageNotifier } from '@src/data-binding/global/Account/UpdateProfileImageNotifier';
 import { atom, useRecoilState } from 'recoil';
 
 export default class Controller {
@@ -16,22 +18,20 @@ export default class Controller {
   readonly profileImage: string;
   protected setProfileImageState: ReturnType<typeof useRecoilState<string>>[1];
 
-  protected static croppedImageAtom = atom<string>({
-    key: 'croppedImageState',
-    default: '',
-  });
-  readonly croppedImage: string;
-  protected setCroppedImageState: ReturnType<typeof useRecoilState<string>>[1];
+  protected updateProfileImageNotifier: UpdateProfileImageNotifier;
+
+  // protected static croppedImageAtom = atom<string>({
+  //   key: 'croppedImageState',
+  //   default: '',
+  // });
+  // readonly croppedImage: string;
+  // protected setCroppedImageState: ReturnType<typeof useRecoilState<string>>[1];
 
   constructor () {
     [this.profileCropPopup, this.setProfileCropPopupState] = useRecoilState<boolean>(Controller.profileCropPopupAtom);
     [this.profileImage, this.setProfileImageState] = useRecoilState<string>(Controller.profileImageAtom);
-    [this.croppedImage, this.setCroppedImageState] = useRecoilState<string>(Controller.croppedImageAtom);
-  }
-
-  async initializeProfileImage () {
-    const profile = await getMyProfileApi.getMyProfile();
-    this.setCroppedImageState(profile.profileImageUrl);
+    // [this.croppedImage, this.setCroppedImageState] = useRecoilState<string>(Controller.croppedImageAtom);
+    this.updateProfileImageNotifier = useUpdateProfileImageNotifier();
   }
 
   open (profileImage: string) {
@@ -40,7 +40,8 @@ export default class Controller {
   }
 
   applyCrop (croppedImage: string) {
-    this.setCroppedImageState(croppedImage);
+    // this.setCroppedImageState(croppedImage);
+    this.updateProfileImageNotifier.updateProfileImage(croppedImage);
     this.setProfileCropPopupState(false);
   }
 

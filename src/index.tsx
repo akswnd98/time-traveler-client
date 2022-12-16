@@ -4,6 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { refreshApi } from './api/BaseApi/GetApi/login/Refresh';
+import { RecoilRoot } from 'recoil';
 
 async function asyncTask () {
   await refresh();
@@ -27,7 +28,9 @@ async function refresh () {
   );
   root.render(
     <BrowserRouter>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </BrowserRouter>
   );
 })();

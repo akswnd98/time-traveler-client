@@ -4,6 +4,7 @@ export type DiscussionStartingPoint = {
   id: number;
   writerId: number;
   writer: string;
+  writerProfileImageUrl: string;
   firstUpload: string;
   body: string;
 };
