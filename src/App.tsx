@@ -34,7 +34,7 @@ function App () {
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/login`} element={<Login />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/write`} element={<Write />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/post`} element={<Post />} />
-        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/my-post`} element={<MyPage />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/my-page`} element={<MyPage />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/about`} element={<About />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/settings`} element={<Settings />} />
       </Routes>
