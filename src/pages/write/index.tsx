@@ -60,7 +60,7 @@ export default function Write () {
         </Top>
         <Bottom>
           <OutButton
-            onClick={() => navigate(`${process.env.REACT_APP_PUBLIC_URL}`)}
+            onClick={() => navigate(`${process.env.REACT_APP_PUBLIC_URL}/`)}
           >
             나가기
           </OutButton>

@@ -29,7 +29,7 @@ function App () {
   return (
     <Root>
       <Routes>
-        <Route path={`${process.env.REACT_APP_PUBLIC_URL}`} element={<Home />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/`} element={<Home />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/signup`} element={<Signup />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/login`} element={<Login />} />
         <Route path={`${process.env.REACT_APP_PUBLIC_URL}/write`} element={<Write />} />

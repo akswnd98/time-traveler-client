@@ -6,7 +6,7 @@ import { signupApi } from '@src/api/BaseApi/GetApi/signup/Signup';
 async function doAsyncTask () {
   await signup();
   await login();
-  window.location.href = `${process.env.REACT_APP_PUBLIC_URL}`;
+  window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/`;
 }
 
 async function signup () {

@@ -29,7 +29,7 @@ export default function Logo () {
     <Root>
       <LogoButton
         startIcon={<LogoImg alt="logo" src={logoSvg} />}
-        onClick={() => location.href = `${process.env.REACT_APP_PUBLIC_URL}`}
+        onClick={() => location.href = `${process.env.REACT_APP_PUBLIC_URL}/`}
       >
         Time Traveler
       </LogoButton>

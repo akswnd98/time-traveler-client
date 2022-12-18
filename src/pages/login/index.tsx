@@ -4,7 +4,7 @@ import { loginApi } from '@src/api/BaseApi/GetApi/login/Login';
 
 async function doAsyncTask (uuid: string) {
   await login (uuid);
-  location.href = `${process.env.REACT_APP_PUBLIC_URL}`;
+  location.href = `${process.env.REACT_APP_PUBLIC_URL}/`;
 }
 
 async function login (uuid: string) {

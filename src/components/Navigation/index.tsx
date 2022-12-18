@@ -31,7 +31,7 @@ export default function Navigation() {
     <Root>
       <Main>
         <Logo />
-        <Search />
+        {/* <Search /> */}
         <Buttons />
       </Main>
       {drawer ? <Drawer /> : false}

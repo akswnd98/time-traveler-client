@@ -10,6 +10,8 @@ import Navigation from '@src/components/Navigation';
 import LoginPopup from '@src/components/LoginPopup';
 import Footer from '@src/components/Footer';
 import defaultAxiosInstance from '@src/api/defaultAxiosInstance';
+import { useProfile } from '@src/data-binding/global/Account/Profile';
+import { useIsLogin } from '@src/data-binding/global/Account/IsLogin';
 
 const Root = styled.div`
   width: 100%;
@@ -71,6 +73,7 @@ const WriteButton = styled(Button)`
 export default function Home () {
   const [viewMode, setViewMode] = useState<'latest' | 'best'>('latest');
   const navigate = useNavigate();
+  const isLogin = useIsLogin();
 
   return (
     <Root>
@@ -95,9 +98,14 @@ export default function Home () {
           <MajorLabel>최근</MajorLabel>
         </HeaderLabel>
         <WriteButtonWrapper>
-          <WriteButton onClick={() => {
-            navigate(`${process.env.REACT_APP_PUBLIC_URL}/write`);
-          }}>글쓰기</WriteButton>
+          {
+            isLogin.isLogin ??
+              <WriteButton onClick={() => {
+                navigate(`${process.env.REACT_APP_PUBLIC_URL}/write`);
+              }}>
+                글쓰기
+              </WriteButton>
+          }
         </WriteButtonWrapper>
         {
           viewMode === 'latest' ? (
