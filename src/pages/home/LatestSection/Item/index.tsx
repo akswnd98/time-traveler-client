@@ -32,7 +32,7 @@ export default function Item (props: PropsType) {
   return (
     <Root
       onClick={async () => {
-        navigate(`/post?no=${props.no}`);
+        navigate(`${process.env.REACT_APP_PUBLIC_URL}/post?no=${props.no}`);
       }}
     >
       <Column text={`${props.no}`} width={columnWidth.no} />
