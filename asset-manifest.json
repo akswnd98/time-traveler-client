@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/time-traveler-client/static/css/main.00c90901.css",
-    "main.js": "/time-traveler-client/static/js/main.75b98cb1.js",
+    "main.js": "/time-traveler-client/static/js/main.07016a3a.js",
     "static/js/787.ee478bf2.chunk.js": "/time-traveler-client/static/js/787.ee478bf2.chunk.js",
     "static/media/8.png": "/time-traveler-client/static/media/8.dbcce97dda75961e9c68.png",
     "static/media/9.png": "/time-traveler-client/static/media/9.6bd4de8420ae7167d369.png",
@@ -76,14 +76,13 @@
     "static/media/KaTeX_Size3-Regular.woff": "/time-traveler-client/static/media/KaTeX_Size3-Regular.7947224e8a9914fa332b.woff",
     "static/media/KaTeX_Size3-Regular.woff2": "/time-traveler-client/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/time-traveler-client/index.html",
-    "static/media/search.svg": "/time-traveler-client/static/media/search.56982c1a4d1ef20556e024945d6badc1.svg",
     "static/media/east.svg": "/time-traveler-client/static/media/east.929ed0b090a699486c136379b195805c.svg",
     "main.00c90901.css.map": "/time-traveler-client/static/css/main.00c90901.css.map",
-    "main.75b98cb1.js.map": "/time-traveler-client/static/js/main.75b98cb1.js.map",
+    "main.07016a3a.js.map": "/time-traveler-client/static/js/main.07016a3a.js.map",
     "787.ee478bf2.chunk.js.map": "/time-traveler-client/static/js/787.ee478bf2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.00c90901.css",
-    "static/js/main.75b98cb1.js"
+    "static/js/main.07016a3a.js"
   ]
 }
