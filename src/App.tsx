@@ -29,14 +29,14 @@ function App () {
   return (
     <Root>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/write' element={<Write />} />
-        <Route path='/post' element={<Post />} />
-        <Route path='/my-page' element={<MyPage />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/settings' element={<Settings />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}`} element={<Home />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/signup`} element={<Signup />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/login`} element={<Login />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/write`} element={<Write />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/post`} element={<Post />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/my-post`} element={<MyPage />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/about`} element={<About />} />
+        <Route path={`${process.env.REACT_APP_PUBLIC_URL}/settings`} element={<Settings />} />
       </Routes>
     </Root>
   );

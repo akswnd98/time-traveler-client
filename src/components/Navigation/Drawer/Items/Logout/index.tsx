@@ -16,7 +16,7 @@ export default function Logout() {
         window.localStorage.setItem('access-token', '');
         window.localStorage.setItem('refresh-token', '');
         defaultAxiosInstance.defaults.headers.common['Authorization'] = false;
-        window.location.href = '/';
+        location.href = `${process.env.REACT_APP_PUBLIC_URL}`;
       }}
     >
       <Item

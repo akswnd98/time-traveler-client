@@ -8,7 +8,7 @@ export default function MyLike() {
     <Item
       icon={<SvgIcon viewBox="0 0 48 48" component={Heart} />}
       text="마이 페이지"
-      onClick={() => { location.href = '/my-page' }}
+      onClick={() => { location.href = `${process.env.REACT_APP_PUBLIC_URL}/my-page` }}
     />
   );
 }

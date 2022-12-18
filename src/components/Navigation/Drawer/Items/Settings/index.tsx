@@ -8,7 +8,7 @@ export default function Settings() {
     <Item
       icon={<SvgIcon viewBox="0 0 48 48" component={SettingsSvg} />}
       text="설정"
-      onClick={() => location.href = '/settings'}
+      onClick={() => location.href = `${process.env.REACT_APP_PUBLIC_URL}/settings`}
     />
   );
 }

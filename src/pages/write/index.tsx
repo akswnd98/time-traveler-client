@@ -60,7 +60,7 @@ export default function Write () {
         </Top>
         <Bottom>
           <OutButton
-            onClick={() => navigate('/')}
+            onClick={() => navigate(`${process.env.REACT_APP_PUBLIC_URL}`)}
           >
             나가기
           </OutButton>
@@ -73,7 +73,7 @@ export default function Write () {
                 } else {
                   updatePostApi.updatePost({ id: no, title: titleBinder.titleRef.current!.value, body: editorMarkdownModel.getMarkdown() });
                 }
-                location.href = '/my-page';
+                location.href = `${process.env.REACT_APP_PUBLIC_URL}/my-page`;
               }}
             >
               올리기

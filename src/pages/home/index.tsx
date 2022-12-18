@@ -96,7 +96,7 @@ export default function Home () {
         </HeaderLabel>
         <WriteButtonWrapper>
           <WriteButton onClick={() => {
-            navigate('/write');
+            navigate(`${process.env.REACT_APP_PUBLIC_URL}/write`);
           }}>글쓰기</WriteButton>
         </WriteButtonWrapper>
         {

@@ -6,7 +6,7 @@ export type PropsType = MyPostSearched;
 
 export default function Post (props: PropsType) {
   return (
-    <Root onClick={() => location.href = `/write?no=${props.id}`}>
+    <Root onClick={() => location.href = `${process.env.REACT_APP_PUBLIC_URL}/write?no=${props.id}`}>
       <Title>{props.title}</Title>
       <BodyPart>
         {props.bodyPart.replace('\n', '<br />')}

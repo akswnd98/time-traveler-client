@@ -19,7 +19,7 @@ export default function Buttons () {
       {/* <IconButton><GithubLogo src={githubSvg} /></IconButton> */}
       <IconButton onClick={() => location.href = 'https://github.com/akswnd98/time-traveler-client'}><SvgIcon sx={{ width: 40, height: 40 }} viewBox="0 0 40 40" component={Github} /></IconButton>
       {/* <TextButton>Lotto 번호 적기</TextButton> */}
-      <TextButton onClick={() => location.href = '/about'}>About</TextButton>
+      <TextButton onClick={() => location.href = `${process.env.REACT_APP_PUBLIC_URL}/about`}>About</TextButton>
       {
         isLogin?.isLogin ? (
           <AvatarButton
